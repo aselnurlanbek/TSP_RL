@@ -1,15 +1,11 @@
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import os
-import time
-from tqdm import tqdm_notebook
+
 from scipy.spatial.distance import cdist
-import imageio
 from matplotlib.patches import Rectangle
 from matplotlib.collections import PatchCollection
 
-plt.style.use("seaborn-dark")
+plt.style.use("seaborn-v0_8-darkgrid")
 
 class DeliveryEnvironment(object):
     def __init__(self, n_stops=10, max_box=10, method="distance",**kwargs):

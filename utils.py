@@ -1,13 +1,5 @@
-import os
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
-import sys
-import random
-import time
-import random
-import numpy as np
-import pylab
 
 def plot_average_running_rewards(rewards, save = None):
     average_running_rewards = np.cumsum(rewards) / np.array(range(1, len(rewards) + 1))
