@@ -7,8 +7,9 @@ from matplotlib.collections import PatchCollection
 
 plt.style.use("seaborn-v0_8-darkgrid")
 
+
 class DeliveryEnvironment(object):
-    def __init__(self, n_stops=10, max_box=10, method="distance",**kwargs):
+    def __init__(self, n_stops=10, max_box=10, method="distance", **kwargs):
         print(f"Initialized Delivery Environment with {n_stops} stops")
         print(f"Target metric for optimization is {method}")
 
@@ -25,7 +26,6 @@ class DeliveryEnvironment(object):
         self.render()
 
         self.reset()
-
 
     def _generate_constraints(self, box_size=0.2, traffic_intensity=5):
         if self.method == "traffic_box":
@@ -65,17 +65,17 @@ class DeliveryEnvironment(object):
         else:
             raise Exception("Method not recognized")
 
-    def render(self, return_img = False):
+    def render(self, return_img=False):
         fig = plt.figure(figsize=(7, 7))
         ax = fig.add_subplot(111)
         ax.set_title("Delivery Stops")
 
         # Show stops
-        ax.scatter(self.x, self.y,c = "red", s = 50)
+        ax.scatter(self.x, self.y, c="red", s=50)
 
         # Show START
         if len(self.stops) > 0:
-            xy = self._get_xy(initial = True)
+            xy = self._get_xy(initial=True)
             xytext = xy[0] + 0.1, xy[1] - 0.05
             ax.annotate("START", xy=xy, xytext=xytext, weight="bold")
 
@@ -84,7 +84,7 @@ class DeliveryEnvironment(object):
             ax.plot(self.x[self.stops], self.y[self.stops], c="blue", linewidth=1, linestyle="--")
 
             # Annotate END
-            xy = self._get_xy(initial = False)
+            xy = self._get_xy(initial=False)
             xytext = xy[0] + 0.1, xy[1] - 0.05
             ax.annotate("END", xy=xy, xytext=xytext, weight="bold")
 
@@ -95,7 +95,6 @@ class DeliveryEnvironment(object):
             rect = Rectangle((left, bottom), width, height)
             collection = PatchCollection([rect], facecolor="red", alpha=0.2)
             ax.add_collection(collection)
-
 
         plt.xticks([])
         plt.yticks([])
@@ -147,7 +146,7 @@ class DeliveryEnvironment(object):
     def _get_state(self):
         return self.stops[-1]
 
-    def _get_xy(self, initial = False):
+    def _get_xy(self, initial=False):
         state = self.stops[0] if initial else self._get_state()
         x = self.x[state]
         y = self.y[state]
@@ -166,10 +165,10 @@ class DeliveryEnvironment(object):
             # Additional reward correspond to slowing down in traffic
             xs, ys = self.x[state], self.y[state]
             xe, ye = self.x[new_state], self.y[new_state]
-            intersections = self._calculate_box_intersection(xs,xe,ys,ye,self.box)
+            intersections = self._calculate_box_intersection(xs, xe, ys, ye, self.box)
             if len(intersections) > 0:
                 i1, i2 = intersections
-                distance_traffic = np.sqrt((i2[1]-i1[1])**2 + (i2[0]-i1[0])**2)
+                distance_traffic = np.sqrt((i2[1] - i1[1]) ** 2 + (i2[0] - i1[0]) ** 2)
                 additional_reward = distance_traffic * self.traffic_intensity * np.random.rand()
             else:
                 additional_reward = np.random.rand()

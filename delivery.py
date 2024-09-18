@@ -5,6 +5,7 @@ from tqdm import tqdm_notebook
 
 from agent import QAgent
 
+
 class DeliveryQAgent(QAgent):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -13,7 +14,7 @@ class DeliveryQAgent(QAgent):
     def act(self, s):
 
         # Get Q Vector
-        q = np.copy(self.Q[s,:])
+        q = np.copy(self.Q[s, :])
 
         # Avoid already visited states
         q[self.states_memory] = -np.inf
@@ -32,8 +33,7 @@ class DeliveryQAgent(QAgent):
         self.states_memory = []
 
 
-def run_episode(env, agent, verbose = 1):
-
+def run_episode(env, agent, verbose=1):
     s = env.reset()
     agent.reset_memory()
 
@@ -74,7 +74,6 @@ def run_episode(env, agent, verbose = 1):
 
 
 def run_n_episodes(env, agent, name="training.gif", n_episodes=1000, render_each=10, fps=10):
-
     # Store the rewards
     rewards = []
     imgs = []
@@ -90,9 +89,8 @@ def run_n_episodes(env, agent, name="training.gif", n_episodes=1000, render_each
             img = env.render(return_img=True)
             imgs.append(img)
 
-
     # Show rewards
-    plt.figure(figsize=(15,3))
+    plt.figure(figsize=(15, 3))
     plt.title("Rewards over training")
     plt.plot(rewards)
     plt.show()

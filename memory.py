@@ -1,7 +1,8 @@
 from collections import deque
 
+
 class Memory(object):
-    def __init__(self, max_memory = 2000):
+    def __init__(self, max_memory=2000):
         self.cache = deque(maxlen=max_memory)
 
     def save(self, args):
